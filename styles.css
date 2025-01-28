@@ -28,10 +28,11 @@ body {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 12px 18px;
+    padding: 14px;
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
+    width: 100%;
 }
 
 .dropdown-content {
@@ -54,13 +55,21 @@ body {
     display: none;
 }
 
-/* Emoji Grid */
+/* Emoji Box */
+.emoji-box {
+    border: 2px solid #007bff;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+}
+
 .emoji-rows {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    margin: 20px 0;
 }
 
 .emoji-row {
@@ -80,14 +89,11 @@ body {
     border-radius: 8px;
     cursor: pointer;
     width: 100%;
+    margin-top: 10px;
 }
 
 .action-btn.blue {
     background-color: #007bff;
-}
-
-.hidden {
-    display: none;
 }
 
 /* Answer Input */
@@ -98,6 +104,7 @@ body {
     text-align: center;
     border: 2px solid #ccc;
     border-radius: 8px;
+    margin-bottom: 15px;
 }
 
 /* Confetti */
