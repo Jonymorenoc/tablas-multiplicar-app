@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Tablas de Multiplicar</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/confetti-js/dist/index.min.js"></script>
@@ -10,6 +10,7 @@
 </head>
 <body>
     <div class="container">
+        <!-- Fila 1: Dropdown -->
         <div class="dropdown">
             <button class="dropdown-btn" id="dropdown-btn">Selecciona Tablas ⬇️</button>
             <div class="dropdown-content hidden" id="dropdown-content">
@@ -26,19 +27,31 @@
             </div>
         </div>
 
+        <!-- Fila 2: Botón Comenzar -->
         <button id="start-btn" class="action-btn">Comenzar</button>
 
         <div id="question-container" class="hidden">
+            <!-- Fila 3: Emojis -->
             <div id="emoji-rows" class="emoji-rows"></div>
+
+            <!-- Fila 4: Operación en grande -->
             <p id="question" class="math-question"></p>
+
+            <!-- Fila 5: Cuadro de respuesta -->
             <div class="answer-container">
                 <input type="number" id="answer" inputmode="numeric" pattern="[0-9]*" placeholder="?">
-                <button id="submit-btn" class="action-btn">Responder</button>
             </div>
-            <button id="next-btn" class="action-btn hidden">Siguiente</button>
+
+            <!-- Fila 6: Botón Responder -->
+            <button id="submit-btn" class="action-btn fill">Responder</button>
+
+            <!-- Fila 7: Botón Siguiente -->
+            <button id="next-btn" class="action-btn blue hidden">Siguiente</button>
+
+            <!-- Fila 8: Resultado Correcto o Incorrecto -->
+            <p id="result" class="hidden"></p>
         </div>
 
-        <p id="result" class="hidden"></p>
         <canvas id="confetti-canvas"></canvas>
     </div>
 </body>
