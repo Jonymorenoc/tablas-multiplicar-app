@@ -61,21 +61,43 @@ body {
 }
 
 /* Emoji Grid */
-.emoji-columns {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.emoji-column {
-    padding: 10px;
-    border-radius: 10px;
+.emoji-rows {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.emoji-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
     background-color: rgba(255, 220, 180, 0.3);
+    padding: 10px;
+    border-radius: 10px;
     border: 2px solid #ffa726;
+}
+
+/* Buttons */
+.action-btn {
+    background-color: #ff9800;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s ease-in-out;
+}
+
+.action-btn:hover {
+    background-color: #e68900;
+}
+
+.hidden {
+    display: none;
 }
 
 /* Confetti Canvas */
