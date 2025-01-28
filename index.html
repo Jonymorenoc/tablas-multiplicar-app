@@ -9,7 +9,7 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="container" onclick="closeDropdown(event)">
+    <div class="container">
         <div class="dropdown">
             <button class="dropdown-btn" id="dropdown-btn">Selecciona Tablas ⬇️</button>
             <div class="dropdown-content hidden" id="dropdown-content">
@@ -26,38 +26,20 @@
             </div>
         </div>
 
-        <button id="start-btn">Comenzar</button>
+        <button id="start-btn" class="action-btn">Comenzar</button>
 
         <div id="question-container" class="hidden">
-            <div id="emoji-columns" class="emoji-columns"></div>
+            <div id="emoji-rows" class="emoji-rows"></div>
             <p id="question" class="math-question"></p>
             <div class="answer-container">
                 <input type="number" id="answer" inputmode="numeric" pattern="[0-9]*" placeholder="?">
-                <button id="submit-btn">Responder</button>
+                <button id="submit-btn" class="action-btn">Responder</button>
             </div>
-            <button id="next-btn" class="hidden">Siguiente</button>
+            <button id="next-btn" class="action-btn hidden">Siguiente</button>
         </div>
 
         <p id="result" class="hidden"></p>
         <canvas id="confetti-canvas"></canvas>
     </div>
-
-    <script>
-        document.getElementById('dropdown-btn').addEventListener('click', function(event) {
-            event.stopPropagation(); // Evita que se cierre inmediatamente
-            document.getElementById('dropdown-content').classList.toggle('hidden');
-        });
-
-        function closeDropdown(event) {
-            const dropdown = document.getElementById('dropdown-content');
-            if (!event.target.closest('.dropdown')) {
-                dropdown.classList.add('hidden');
-            }
-        }
-
-        document.getElementById('start-btn').addEventListener('click', function() {
-            document.getElementById('dropdown-content').classList.add('hidden');
-        });
-    </script>
 </body>
 </html>
