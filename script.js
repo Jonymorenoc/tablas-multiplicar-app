@@ -1,10 +1,16 @@
 document.getElementById('start-btn').addEventListener('click', startQuiz);
 document.getElementById('submit-btn').addEventListener('click', checkAnswer);
 document.getElementById('next-btn').addEventListener('click', generateQuestion);
+document.getElementById('dropdown-btn').addEventListener('click', toggleDropdown);
 
 let selectedTables = [];
 let currentQuestion = {};
 let confetti;
+
+function toggleDropdown() {
+    const dropdown = document.getElementById('dropdown-content');
+    dropdown.classList.toggle('visible');
+}
 
 function startQuiz() {
     selectedTables = Array.from(document.querySelectorAll('.table-select:checked')).map(input => parseInt(input.value));
@@ -23,17 +29,25 @@ function generateQuestion() {
     const number = Math.floor(Math.random() * 10) + 1;
     currentQuestion = { table, number, answer: table * number };
 
-    // Generar emojis aleatorios
-    const emojis = ['🍎', '🐶', '🐱', '🚗', '🍇', '🦄', '🐼', '🎈', '🍉'];
+    const emojis = ['🍎', '🐶', '🎈', '🍇', '🐱', '🦄', '🐼', '🚗', '🍉'];
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
-    let emojiHTML = '';
-    for (let i = 0; i < number; i++) {
-        emojiHTML += `<span>${randomEmoji}</span>`;
+    const emojiContainer = document.getElementById('emoji-grid');
+    emojiContainer.innerHTML = '';
+
+    // Determine grid size dynamically
+    emojiContainer.className = 'emoji-grid';
+    if (number <= 4) emojiContainer.classList.add('grid-1');
+    else if (number <= 8) emojiContainer.classList.add('grid-2');
+    else emojiContainer.classList.add('grid-3');
+
+    for (let i = 0; i < table * number; i++) {
+        const emoji = document.createElement('span');
+        emoji.textContent = randomEmoji;
+        emojiContainer.appendChild(emoji);
     }
 
     document.getElementById('question').textContent = `¿Cuánto es ${table} x ${number}?`;
-    document.getElementById('emoji-container').innerHTML = emojiHTML;
     document.getElementById('answer').value = '';
     document.getElementById('result').classList.add('hidden');
     document.getElementById('next-btn').classList.add('hidden');
