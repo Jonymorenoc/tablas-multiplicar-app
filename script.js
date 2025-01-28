@@ -102,4 +102,39 @@ submitBtn.addEventListener('click', () => {
 
   if (userAnswer === currentQuestion.answer) {
     // Correct answer
-    resultEl.textContent = '¡Correcto!
+    resultEl.textContent = '¡Correcto! 🎉';
+
+    // Create and render confetti
+    confetti = new ConfettiGenerator({
+      target: 'confetti-canvas',
+      max: 150,
+      size: 1.2,
+      animate: true,
+      props: ['circle', 'square', 'triangle'], // shapes
+      colors: [
+        [165, 104, 246],
+        [230, 61, 135],
+        [0, 199, 228],
+        [253, 214, 126]
+      ],
+      clock: 30,
+      rotate: true,
+      start_from_edge: true,
+      respawn: false
+    });
+    confetti.render();
+
+  } else {
+    // Incorrect answer
+    // Highlight correct answer in red, bold, bigger font
+    resultEl.innerHTML = `Incorrecto. La respuesta era <span class="incorrect-answer">${currentQuestion.answer}</span>.`;
+  }
+
+  // Show "Siguiente" button so user can move on
+  nextBtn.classList.remove('hidden');
+});
+
+/* ==============================
+   5. Next Question 
+============================== */
+nextBtn.addEventListener('click', generateQuestion);
