@@ -56,31 +56,26 @@ body {
     margin-right: 5px;
 }
 
-.dropdown-content.visible {
-    display: block;
+.dropdown-content.hidden {
+    display: none;
 }
 
 /* Emoji Grid */
-.emoji-grid {
-    display: grid;
-    gap: 10px;
-    margin: 20px 0;
+.emoji-columns {
+    display: flex;
     justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.emoji-column {
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    font-size: 32px;
-}
-
-/* Adjust grid columns dynamically */
-.emoji-grid.grid-1 {
-    grid-template-columns: repeat(1, 1fr);
-}
-
-.emoji-grid.grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.emoji-grid.grid-3 {
-    grid-template-columns: repeat(3, 1fr);
+    background-color: rgba(255, 220, 180, 0.3);
+    border: 2px solid #ffa726;
 }
 
 /* Confetti Canvas */
