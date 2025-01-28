@@ -1,77 +1,105 @@
-document.getElementById('start-btn').addEventListener('click', startQuiz);
-document.getElementById('submit-btn').addEventListener('click', checkAnswer);
-document.getElementById('next-btn').addEventListener('click', generateQuestion);
-
-// ----------------------
-// Fix for the dropdown
-// ----------------------
+// Grabbing elements
 const dropdownBtn = document.getElementById('dropdown-btn');
 const dropdownContent = document.getElementById('dropdown-content');
+const startBtn = document.getElementById('start-btn');
+const submitBtn = document.getElementById('submit-btn');
+const nextBtn = document.getElementById('next-btn');
+const questionContainer = document.getElementById('question-container');
+const emojiRows = document.getElementById('emoji-rows');
+const questionEl = document.getElementById('question');
+const answerEl = document.getElementById('answer');
+const resultEl = document.getElementById('result');
 
+let selectedTables = [];
+let currentQuestion = {};
+let confetti; // will hold our confetti instance
+
+/* ==============================
+   1. Dropdown Toggle 
+============================== */
 dropdownBtn.addEventListener('click', () => {
   dropdownContent.classList.toggle('hidden');
 });
 
-let selectedTables = [];
-let currentQuestion = {};
-let confetti;
+/* ==============================
+   2. Start Quiz 
+============================== */
+startBtn.addEventListener('click', () => {
+  selectedTables = Array.from(
+    document.querySelectorAll('.table-select:checked')
+  ).map(input => parseInt(input.value));
 
-function startQuiz() {
-    selectedTables = Array.from(document.querySelectorAll('.table-select:checked'))
-        .map(input => parseInt(input.value));
-    if (selectedTables.length === 0) {
-        alert('Selecciona al menos una tabla.');
-        return;
-    }
-    document.getElementById('question-container').classList.remove('hidden');
-    generateQuestion();
-}
+  if (selectedTables.length === 0) {
+    alert('Selecciona al menos una tabla.');
+    return;
+  }
 
+  // show quiz container
+  questionContainer.classList.remove('hidden');
+  generateQuestion();
+});
+
+/* ==============================
+   3. Generate a New Question 
+============================== */
 function generateQuestion() {
-    const table = selectedTables[Math.floor(Math.random() * selectedTables.length)];
-    const number = Math.floor(Math.random() * 10) + 1;
-    currentQuestion = {
-        table,
-        number,
-        answer: table * number
-    };
+  // Clear previous result
+  resultEl.classList.add('hidden');
+  // Hide the Next button until user answers
+  nextBtn.classList.add('hidden');
+  // Clear the input
+  answerEl.value = '';
 
-    const emojis = ['🍎', '🐶', '🎈', '🍇', '🐱', '🦄', '🐼', '🚗', '🍉'];
-    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+  // Clear any previous confetti
+  if (confetti) {
+    confetti.clear();
+  }
 
-    const emojiContainer = document.getElementById('emoji-rows');
-    emojiContainer.innerHTML = '';
+  // Random table from selected tables
+  const table = selectedTables[Math.floor(Math.random() * selectedTables.length)];
+  // Random number from 1 to 10
+  const number = Math.floor(Math.random() * 10) + 1;
 
-    // Create 'table' rows, each row has 'number' emojis
-    for (let i = 0; i < table; i++) {
-        const row = document.createElement('div');
-        row.classList.add('emoji-row');
+  currentQuestion = {
+    table,
+    number,
+    answer: table * number
+  };
 
-        for (let j = 0; j < number; j++) {
-            const emoji = document.createElement('span');
-            emoji.textContent = randomEmoji;
-            row.appendChild(emoji);
-        }
+  // Populate the emojis
+  const emojis = ['🍎', '🐶', '🎈', '🍇', '🐱', '🦄', '🐼', '🚗', '🍉', '🌟', '🐣'];
+  const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
-        emojiContainer.appendChild(row);
+  emojiRows.innerHTML = '';
+  for (let i = 0; i < table; i++) {
+    const row = document.createElement('div');
+    row.classList.add('emoji-row');
+    for (let j = 0; j < number; j++) {
+      const span = document.createElement('span');
+      span.textContent = randomEmoji;
+      row.appendChild(span);
     }
+    emojiRows.appendChild(row);
+  }
 
-    document.getElementById('question').textContent = `${table} x ${number}`;
-    document.getElementById('answer').value = ''; // Clear previous answer
-    document.getElementById('result').classList.add('hidden'); // Hide previous result
-    document.getElementById('next-btn').classList.add('hidden');
+  // Display the question
+  questionEl.textContent = `${table} x ${number}`;
 }
 
-function checkAnswer() {
-    const userAnswer = parseInt(document.getElementById('answer').value);
-    const resultEl = document.getElementById('result');
-    
-    if (userAnswer === currentQuestion.answer) {
-        resultEl.textContent = '¡Correcto! 🎉';
-    } else {
-        resultEl.textContent = `Incorrecto. La respuesta era ${currentQuestion.answer}.`;
-    }
-    
-    resultEl.classList.remove('hidden');
-    document.getElementById('next-btn').classList.remove('hidden');
-}
+/* ==============================
+   4. Check Answer 
+============================== */
+submitBtn.addEventListener('click', () => {
+  const userAnswer = parseInt(answerEl.value);
+
+  if (isNaN(userAnswer)) {
+    alert('Por favor ingresa un número.');
+    return;
+  }
+
+  // Show the result
+  resultEl.classList.remove('hidden');
+
+  if (userAnswer === currentQuestion.answer) {
+    // Correct answer
+    resultEl.textContent = '¡Correcto!
