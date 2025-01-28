@@ -1,16 +1,10 @@
 document.getElementById('start-btn').addEventListener('click', startQuiz);
 document.getElementById('submit-btn').addEventListener('click', checkAnswer);
 document.getElementById('next-btn').addEventListener('click', generateQuestion);
-document.getElementById('dropdown-btn').addEventListener('click', toggleDropdown);
 
 let selectedTables = [];
 let currentQuestion = {};
 let confetti;
-
-function toggleDropdown() {
-    const dropdown = document.getElementById('dropdown-content');
-    dropdown.classList.toggle('visible');
-}
 
 function startQuiz() {
     selectedTables = Array.from(document.querySelectorAll('.table-select:checked')).map(input => parseInt(input.value));
@@ -32,19 +26,18 @@ function generateQuestion() {
     const emojis = ['🍎', '🐶', '🎈', '🍇', '🐱', '🦄', '🐼', '🚗', '🍉'];
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
-    const emojiContainer = document.getElementById('emoji-grid');
+    const emojiContainer = document.getElementById('emoji-columns');
     emojiContainer.innerHTML = '';
 
-    // Determine grid size dynamically
-    emojiContainer.className = 'emoji-grid';
-    if (number <= 4) emojiContainer.classList.add('grid-1');
-    else if (number <= 8) emojiContainer.classList.add('grid-2');
-    else emojiContainer.classList.add('grid-3');
-
-    for (let i = 0; i < table * number; i++) {
-        const emoji = document.createElement('span');
-        emoji.textContent = randomEmoji;
-        emojiContainer.appendChild(emoji);
+    for (let i = 0; i < number; i++) {
+        const column = document.createElement('div');
+        column.classList.add('emoji-column');
+        for (let j = 0; j < table; j++) {
+            const emoji = document.createElement('span');
+            emoji.textContent = randomEmoji;
+            column.appendChild(emoji);
+        }
+        emojiContainer.appendChild(column);
     }
 
     document.getElementById('question').textContent = `¿Cuánto es ${table} x ${number}?`;
@@ -71,8 +64,7 @@ function checkAnswer() {
 }
 
 function initConfetti() {
-    const confettiSettings = { target: 'confetti-canvas', max: 150, size: 1.2 };
-    confetti = new ConfettiGenerator(confettiSettings);
+    confetti = new ConfettiGenerator({ target: 'confetti-canvas', max: 150, size: 1.2 });
 }
 
 function launchConfetti() {
