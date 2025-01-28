@@ -1,125 +1,77 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f7f9fc;
-    color: #333;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    text-align: center;
+document.getElementById('start-btn').addEventListener('click', startQuiz);
+document.getElementById('submit-btn').addEventListener('click', checkAnswer);
+document.getElementById('next-btn').addEventListener('click', generateQuestion);
+
+// ----------------------
+// Fix for the dropdown
+// ----------------------
+const dropdownBtn = document.getElementById('dropdown-btn');
+const dropdownContent = document.getElementById('dropdown-content');
+
+dropdownBtn.addEventListener('click', () => {
+  dropdownContent.classList.toggle('hidden');
+});
+
+let selectedTables = [];
+let currentQuestion = {};
+let confetti;
+
+function startQuiz() {
+    selectedTables = Array.from(document.querySelectorAll('.table-select:checked'))
+        .map(input => parseInt(input.value));
+    if (selectedTables.length === 0) {
+        alert('Selecciona al menos una tabla.');
+        return;
+    }
+    document.getElementById('question-container').classList.remove('hidden');
+    generateQuestion();
 }
 
-.container {
-    max-width: 500px;
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+function generateQuestion() {
+    const table = selectedTables[Math.floor(Math.random() * selectedTables.length)];
+    const number = Math.floor(Math.random() * 10) + 1;
+    currentQuestion = {
+        table,
+        number,
+        answer: table * number
+    };
+
+    const emojis = ['🍎', '🐶', '🎈', '🍇', '🐱', '🦄', '🐼', '🚗', '🍉'];
+    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+
+    const emojiContainer = document.getElementById('emoji-rows');
+    emojiContainer.innerHTML = '';
+
+    // Create 'table' rows, each row has 'number' emojis
+    for (let i = 0; i < table; i++) {
+        const row = document.createElement('div');
+        row.classList.add('emoji-row');
+
+        for (let j = 0; j < number; j++) {
+            const emoji = document.createElement('span');
+            emoji.textContent = randomEmoji;
+            row.appendChild(emoji);
+        }
+
+        emojiContainer.appendChild(row);
+    }
+
+    document.getElementById('question').textContent = `${table} x ${number}`;
+    document.getElementById('answer').value = ''; // Clear previous answer
+    document.getElementById('result').classList.add('hidden'); // Hide previous result
+    document.getElementById('next-btn').classList.add('hidden');
 }
 
-/* Dropdown */
-.dropdown {
-    position: relative;
-    margin-bottom: 20px;
-}
-
-.dropdown-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 14px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-}
-
-.dropdown-content {
-    position: absolute;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    border-radius: 5px;
-    z-index: 1;
-    width: 100%;
-}
-
-.dropdown-content.hidden {
-    display: none;
-}
-
-.dropdown-content label {
-    display: block;
-    margin: 5px 0;
-}
-
-/* Emoji Box */
-.emoji-box {
-    border: 2px solid #007bff;
-    background-color: rgba(255, 152, 0, 0.1);
-    padding: 10px;
-    border-radius: 10px;
-    margin: 20px 0;
-    display: flex;
-    justify-content: center;
-}
-
-.emoji-rows {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Each row in its own outlined box */
-.emoji-row {
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 10px;
-}
-
-/* Buttons */
-.action-btn {
-    background-color: #ff9800;
-    color: white;
-    border: none;
-    padding: 14px 20px;
-    font-size: 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.action-btn.blue {
-    background-color: #007bff;
-}
-
-/* Answer Input */
-.answer-container input {
-    font-size: 22px;
-    padding: 12px;
-    width: 80%;
-    text-align: center;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 15px;
-}
-
-/* Math Question */
-.math-question {
-    font-size: 28px;
-    font-weight: bold;
-}
-
-/* Confetti */
-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
+function checkAnswer() {
+    const userAnswer = parseInt(document.getElementById('answer').value);
+    const resultEl = document.getElementById('result');
+    
+    if (userAnswer === currentQuestion.answer) {
+        resultEl.textContent = '¡Correcto! 🎉';
+    } else {
+        resultEl.textContent = `Incorrecto. La respuesta era ${currentQuestion.answer}.`;
+    }
+    
+    resultEl.classList.remove('hidden');
+    document.getElementById('next-btn').classList.remove('hidden');
 }
