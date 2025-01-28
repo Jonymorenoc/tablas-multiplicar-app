@@ -1,16 +1,10 @@
 document.getElementById('start-btn').addEventListener('click', startQuiz);
 document.getElementById('submit-btn').addEventListener('click', checkAnswer);
 document.getElementById('next-btn').addEventListener('click', generateQuestion);
-document.getElementById('dropdown-btn').addEventListener('click', toggleDropdown);
 
 let selectedTables = [];
 let currentQuestion = {};
 let confetti;
-
-function toggleDropdown(event) {
-    event.stopPropagation();
-    document.getElementById('dropdown-content').classList.toggle('hidden');
-}
 
 function startQuiz() {
     selectedTables = Array.from(document.querySelectorAll('.table-select:checked')).map(input => parseInt(input.value));
@@ -18,11 +12,8 @@ function startQuiz() {
         alert('Selecciona al menos una tabla.');
         return;
     }
-    document.getElementById('dropdown-content').classList.add('hidden');
     generateQuestion();
     document.getElementById('question-container').classList.remove('hidden');
-    document.getElementById('result').classList.add('hidden');
-    initConfetti();
 }
 
 function generateQuestion() {
@@ -48,26 +39,9 @@ function generateQuestion() {
     }
 
     document.getElementById('question').textContent = `${table} x ${number}`;
-    document.getElementById('answer').value = '';
-    document.getElementById('next-btn').classList.add('hidden');
 }
 
 function checkAnswer() {
     const userAnswer = parseInt(document.getElementById('answer').value);
-    if (userAnswer === currentQuestion.answer) {
-        document.getElementById('result').textContent = '¡Correcto! 🎉';
-        launchConfetti();
-    } else {
-        document.getElementById('result').textContent = `Incorrecto. La respuesta correcta era ${currentQuestion.answer}.`;
-    }
-    document.getElementById('next-btn').classList.remove('hidden');
-}
-
-function initConfetti() {
-    confetti = new ConfettiGenerator({ target: 'confetti-canvas', max: 150, size: 1.2 });
-}
-
-function launchConfetti() {
-    confetti.render();
-    setTimeout(() => confetti.clear(), 2000);
+    document.getElementById('result').textContent = userAnswer === currentQuestion.answer ? '¡Correcto! 🎉' : `Incorrecto. La respuesta era ${currentQuestion.answer}.`;
 }
