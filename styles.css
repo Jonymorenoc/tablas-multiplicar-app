@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #fef8e6;
+    background-color: #f7f9fc;
     color: #333;
     margin: 0;
     display: flex;
@@ -11,43 +11,46 @@ body {
 
 .container {
     max-width: 500px;
-    margin: 0 auto;
     padding: 20px;
     background-color: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     text-align: center;
-    animation: fadeIn 1s ease-in-out;
 }
 
 h1 {
-    font-size: 28px;
-    color: #ff6f61;
-    margin-bottom: 15px;
+    font-size: 32px;
+    color: #4CAF50;
+    margin-bottom: 20px;
     font-weight: bold;
+}
+
+p {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #666;
 }
 
 .settings label {
     display: inline-block;
-    margin: 10px;
+    margin: 10px 10px;
     font-size: 16px;
-    color: #555;
 }
 
 button {
-    background-color: #ffa726;
+    background-color: #4CAF50;
     color: white;
     border: none;
     padding: 10px 20px;
-    font-size: 18px;
-    border-radius: 10px;
+    font-size: 16px;
+    border-radius: 5px;
     cursor: pointer;
     margin-top: 15px;
     transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #fb8c00;
+    background-color: #45a049;
 }
 
 .hidden {
@@ -56,16 +59,33 @@ button:hover {
 
 input[type="number"] {
     padding: 10px;
-    font-size: 16px;
-    margin: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    font-size: 18px;
+    margin: 20px auto;
+    border-radius: 5px;
+    border: 1px solid #ddd;
     width: 70%;
     text-align: center;
 }
 
+#question {
+    font-size: 28px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+#emoji-container {
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+}
+
 #result {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     margin-top: 20px;
 }
@@ -78,13 +98,9 @@ input[type="number"] {
     color: red;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
 }
