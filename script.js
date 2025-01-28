@@ -1,10 +1,16 @@
 document.getElementById('start-btn').addEventListener('click', startQuiz);
 document.getElementById('submit-btn').addEventListener('click', checkAnswer);
 document.getElementById('next-btn').addEventListener('click', generateQuestion);
+document.getElementById('dropdown-btn').addEventListener('click', toggleDropdown);
 
 let selectedTables = [];
 let currentQuestion = {};
 let confetti;
+
+function toggleDropdown(event) {
+    event.stopPropagation();
+    document.getElementById('dropdown-content').classList.toggle('hidden');
+}
 
 function startQuiz() {
     selectedTables = Array.from(document.querySelectorAll('.table-select:checked')).map(input => parseInt(input.value));
@@ -12,6 +18,7 @@ function startQuiz() {
         alert('Selecciona al menos una tabla.');
         return;
     }
+    document.getElementById('dropdown-content').classList.add('hidden');
     generateQuestion();
     document.getElementById('question-container').classList.remove('hidden');
     document.getElementById('result').classList.add('hidden');
@@ -26,18 +33,18 @@ function generateQuestion() {
     const emojis = ['🍎', '🐶', '🎈', '🍇', '🐱', '🦄', '🐼', '🚗', '🍉'];
     const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
-    const emojiContainer = document.getElementById('emoji-columns');
+    const emojiContainer = document.getElementById('emoji-rows');
     emojiContainer.innerHTML = '';
 
-    for (let i = 0; i < number; i++) {
-        const column = document.createElement('div');
-        column.classList.add('emoji-column');
-        for (let j = 0; j < table; j++) {
+    for (let i = 0; i < table; i++) {
+        const row = document.createElement('div');
+        row.classList.add('emoji-row');
+        for (let j = 0; j < number; j++) {
             const emoji = document.createElement('span');
             emoji.textContent = randomEmoji;
-            column.appendChild(emoji);
+            row.appendChild(emoji);
         }
-        emojiContainer.appendChild(column);
+        emojiContainer.appendChild(row);
     }
 
     document.getElementById('question').textContent = `¿Cuánto es ${table} x ${number}?`;
