@@ -36,7 +36,6 @@ body {
 }
 
 .dropdown-content {
-    display: none;
     position: absolute;
     background-color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -46,13 +45,13 @@ body {
     width: 100%;
 }
 
+.dropdown-content.hidden {
+    display: none;
+}
+
 .dropdown-content label {
     display: block;
     margin: 5px 0;
-}
-
-.dropdown-content.hidden {
-    display: none;
 }
 
 /* Emoji Box */
@@ -68,15 +67,19 @@ body {
 
 .emoji-rows {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 10px;
-    justify-content: center;
 }
 
+/* Each row in its own outlined box */
 .emoji-row {
     display: flex;
-    gap: 10px;
+    gap: 5px;
     justify-content: center;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
 }
 
 /* Buttons */
