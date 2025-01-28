@@ -47,26 +47,19 @@ function generateQuestion() {
         emojiContainer.appendChild(row);
     }
 
-    document.getElementById('question').textContent = `¿Cuánto es ${table} x ${number}?`;
+    document.getElementById('question').textContent = `${table} x ${number}`;
     document.getElementById('answer').value = '';
-    document.getElementById('result').classList.add('hidden');
     document.getElementById('next-btn').classList.add('hidden');
 }
 
 function checkAnswer() {
     const userAnswer = parseInt(document.getElementById('answer').value);
-    const result = document.getElementById('result');
-
     if (userAnswer === currentQuestion.answer) {
-        result.textContent = '¡Correcto! 🎉';
-        result.className = 'correct';
+        document.getElementById('result').textContent = '¡Correcto! 🎉';
         launchConfetti();
     } else {
-        result.textContent = `Incorrecto. La respuesta correcta era ${currentQuestion.answer}.`;
-        result.className = 'incorrect';
+        document.getElementById('result').textContent = `Incorrecto. La respuesta correcta era ${currentQuestion.answer}.`;
     }
-
-    result.classList.remove('hidden');
     document.getElementById('next-btn').classList.remove('hidden');
 }
 
