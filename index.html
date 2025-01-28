@@ -12,7 +12,7 @@
     <div class="container">
         <!-- Fila 1: Dropdown -->
         <div class="dropdown">
-            <button class="dropdown-btn" id="dropdown-btn">Selecciona Tablas ⬇️</button>
+            <button class="dropdown-btn full-width" id="dropdown-btn">Selecciona Tablas ⬇️</button>
             <div class="dropdown-content hidden" id="dropdown-content">
                 <label><input type="checkbox" class="table-select" value="1"> Tabla del 1</label>
                 <label><input type="checkbox" class="table-select" value="2" checked> Tabla del 2</label>
@@ -26,16 +26,18 @@
                 <label><input type="checkbox" class="table-select" value="10"> Tabla del 10</label>
             </div>
         </div>
-
+        
         <!-- Fila 2: Botón Comenzar -->
         <button id="start-btn" class="action-btn">Comenzar</button>
 
         <div id="question-container" class="hidden">
-            <!-- Fila 3: Emojis -->
-            <div id="emoji-rows" class="emoji-rows"></div>
+            <!-- Fila 3: Caja con Emojis -->
+            <div class="emoji-box">
+                <div id="emoji-rows" class="emoji-rows"></div>
+            </div>
 
             <!-- Fila 4: Operación en grande -->
-            <p id="question" class="math-question"></p>
+            <p id="question" class="math-question large-text"></p>
 
             <!-- Fila 5: Cuadro de respuesta -->
             <div class="answer-container">
@@ -54,5 +56,19 @@
 
         <canvas id="confetti-canvas"></canvas>
     </div>
+
+    <script>
+        document.getElementById('dropdown-btn').addEventListener('click', function(event) {
+            event.stopPropagation();
+            document.getElementById('dropdown-content').classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('dropdown-content');
+            if (!event.target.closest('.dropdown')) {
+                dropdown.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>
