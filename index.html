@@ -9,7 +9,7 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" onclick="closeDropdown(event)">
         <div class="dropdown">
             <button class="dropdown-btn" id="dropdown-btn">Selecciona Tablas ⬇️</button>
             <div class="dropdown-content hidden" id="dropdown-content">
@@ -29,7 +29,7 @@
         <button id="start-btn">Comenzar</button>
 
         <div id="question-container" class="hidden">
-            <div id="emoji-grid" class="emoji-grid"></div>
+            <div id="emoji-columns" class="emoji-columns"></div>
             <p id="question" class="math-question"></p>
             <div class="answer-container">
                 <input type="number" id="answer" inputmode="numeric" pattern="[0-9]*" placeholder="?">
@@ -41,5 +41,23 @@
         <p id="result" class="hidden"></p>
         <canvas id="confetti-canvas"></canvas>
     </div>
+
+    <script>
+        document.getElementById('dropdown-btn').addEventListener('click', function(event) {
+            event.stopPropagation(); // Evita que se cierre inmediatamente
+            document.getElementById('dropdown-content').classList.toggle('hidden');
+        });
+
+        function closeDropdown(event) {
+            const dropdown = document.getElementById('dropdown-content');
+            if (!event.target.closest('.dropdown')) {
+                dropdown.classList.add('hidden');
+            }
+        }
+
+        document.getElementById('start-btn').addEventListener('click', function() {
+            document.getElementById('dropdown-content').classList.add('hidden');
+        });
+    </script>
 </body>
 </html>
