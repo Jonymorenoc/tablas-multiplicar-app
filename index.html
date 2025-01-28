@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablas de Multiplicar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Repasa las Tablas de Multiplicar</h1>
+        <p>Selecciona las tablas que quieres practicar:</p>
+        <div class="settings">
+            <label><input type="checkbox" class="table-select" value="1"> Tabla del 1</label>
+            <label><input type="checkbox" class="table-select" value="2" checked> Tabla del 2</label>
+            <label><input type="checkbox" class="table-select" value="3" checked> Tabla del 3</label>
+            <label><input type="checkbox" class="table-select" value="4" checked> Tabla del 4</label>
+            <label><input type="checkbox" class="table-select" value="5" checked> Tabla del 5</label>
+            <label><input type="checkbox" class="table-select" value="6"> Tabla del 6</label>
+            <label><input type="checkbox" class="table-select" value="7"> Tabla del 7</label>
+            <label><input type="checkbox" class="table-select" value="8"> Tabla del 8</label>
+            <label><input type="checkbox" class="table-select" value="9"> Tabla del 9</label>
+            <label><input type="checkbox" class="table-select" value="10"> Tabla del 10</label>
+        </div>
+        <button id="start-btn">Comenzar</button>
+        <div id="question-container" class="hidden">
+            <p id="question"></p>
+            <input type="number" id="answer" placeholder="Escribe tu respuesta">
+            <button id="submit-btn">Responder</button>
+        </div>
+        <p id="result" class="hidden"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
