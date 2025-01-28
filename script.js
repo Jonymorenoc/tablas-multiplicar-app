@@ -1,10 +1,13 @@
+// Event Listeners
 document.getElementById('start-btn').addEventListener('click', startQuiz);
 document.getElementById('submit-btn').addEventListener('click', checkAnswer);
 
+// Variables
 let selectedTables = [];
 let currentQuestion = {};
 let score = 0;
 
+// Start the Quiz
 function startQuiz() {
     // Get selected tables
     selectedTables = Array.from(document.querySelectorAll('.table-select:checked')).map(input => parseInt(input.value));
@@ -18,35 +21,28 @@ function startQuiz() {
     document.getElementById('result').classList.add('hidden');
 }
 
+// Generate a Question
 function generateQuestion() {
-    // Generate a random question
     const table = selectedTables[Math.floor(Math.random() * selectedTables.length)];
     const number = Math.floor(Math.random() * 10) + 1;
     currentQuestion = { table, number, answer: table * number };
 
-    // Display the question and apples
-    let apples = generateApples(table, number);
-    document.getElementById('question').innerHTML = `¿Cuánto es <strong>${table} x ${number}?</strong><br>${apples}`;
+    // Display the question
+    document.getElementById('question').innerHTML = `¿Cuánto es <strong>${table} x ${number}?</strong>`;
     document.getElementById('answer').value = '';
 }
 
-function generateApples(table, number) {
-    // Generate apples for visual representation
-    let applesHTML = '';
-    for (let i = 0; i < number; i++) {
-        applesHTML += `<span class="apple">🍎</span>`;
-    }
-    return applesHTML;
-}
-
+// Check the Answer
 function checkAnswer() {
-    // Check the user's answer
     const userAnswer = parseInt(document.getElementById('answer').value);
+    const result = document.getElementById('result');
     if (userAnswer === currentQuestion.answer) {
-        document.getElementById('result').innerHTML = '¡Correcto! 🎉';
+        result.textContent = '¡Correcto! 🎉';
+        result.style.color = 'green';
     } else {
-        document.getElementById('result').innerHTML = `Incorrecto. La respuesta correcta era ${currentQuestion.answer}.`;
+        result.textContent = `Incorrecto. La respuesta correcta era ${currentQuestion.answer}.`;
+        result.style.color = 'red';
     }
-    document.getElementById('result').classList.remove('hidden');
-    setTimeout(generateQuestion, 2000); // Wait 2 seconds and generate a new question
+    result.classList.remove('hidden');
+    setTimeout(generateQuestion, 2000); // Generate a new question after 2 seconds
 }
