@@ -21,17 +21,28 @@ function generateQuestion() {
     const table = selectedTables[Math.floor(Math.random() * selectedTables.length)];
     const number = Math.floor(Math.random() * 10) + 1;
     currentQuestion = { table, number, answer: table * number };
-    document.getElementById('question').textContent = `¿Cuánto es ${table} x ${number}?`;
+
+    let apples = generateApples(table, number);
+    document.getElementById('question').innerHTML = `¿Cuánto es <strong>${table} x ${number}?</strong><br>${apples}`;
     document.getElementById('answer').value = '';
+}
+
+function generateApples(table, number) {
+    let applesHTML = '';
+    for (let i = 0; i < number; i++) {
+        applesHTML += `<span class="apple">🍎</span>`;
+    }
+    return applesHTML;
 }
 
 function checkAnswer() {
     const userAnswer = parseInt(document.getElementById('answer').value);
     if (userAnswer === currentQuestion.answer) {
         score++;
-        alert('¡Correcto!');
+        document.getElementById('result').innerHTML = '¡Correcto! 🎉';
     } else {
-        alert(`Incorrecto. La respuesta correcta era ${currentQuestion.answer}.`);
+        document.getElementById('result').innerHTML = `Incorrecto. La respuesta correcta era ${currentQuestion.answer}.`;
     }
-    generateQuestion();
+    document.getElementById('result').classList.remove('hidden');
+    setTimeout(generateQuestion, 1500);
 }
