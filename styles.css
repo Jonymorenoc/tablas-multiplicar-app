@@ -58,6 +58,7 @@ body {
 /* Emoji Box */
 .emoji-box {
     border: 2px solid #007bff;
+    background-color: rgba(255, 152, 0, 0.1);
     padding: 10px;
     border-radius: 10px;
     margin: 20px 0;
@@ -67,16 +68,15 @@ body {
 
 .emoji-rows {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
+    justify-content: center;
 }
 
 .emoji-row {
     display: flex;
     gap: 10px;
     justify-content: center;
-    padding: 10px;
 }
 
 /* Buttons */
@@ -105,6 +105,12 @@ body {
     border: 2px solid #ccc;
     border-radius: 8px;
     margin-bottom: 15px;
+}
+
+/* Math Question */
+.math-question {
+    font-size: 28px;
+    font-weight: bold;
 }
 
 /* Confetti */
