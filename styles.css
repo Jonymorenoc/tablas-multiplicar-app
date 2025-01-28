@@ -18,86 +18,72 @@ body {
     text-align: center;
 }
 
-h1 {
-    font-size: 32px;
-    color: #4CAF50;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-p {
-    margin-bottom: 20px;
-    font-size: 18px;
-    color: #666;
-}
-
-.settings label {
+/* Dropdown Menu */
+.dropdown {
+    position: relative;
     display: inline-block;
-    margin: 10px 10px;
-    font-size: 16px;
+    margin-bottom: 20px;
 }
 
-button {
+.dropdown-btn {
     background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 15px;
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 15px;
-    transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: #45a049;
-}
-
-.hidden {
+.dropdown-content {
     display: none;
-}
-
-input[type="number"] {
+    position: absolute;
+    background-color: #f1f1f1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 10px;
-    font-size: 18px;
-    margin: 20px auto;
     border-radius: 5px;
-    border: 1px solid #ddd;
-    width: 70%;
-    text-align: center;
+    z-index: 1;
 }
 
-#question {
-    font-size: 28px;
-    color: #333;
-    font-weight: bold;
-    margin-bottom: 15px;
+.dropdown-content label {
+    display: block;
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
 }
 
-#emoji-container {
-    margin: 20px 0;
+.dropdown-content input {
+    margin-right: 5px;
+}
+
+.dropdown-content.visible {
+    display: block;
+}
+
+/* Emoji Grid */
+.emoji-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
     gap: 10px;
+    margin: 20px 0;
     justify-content: center;
     align-items: center;
     font-size: 32px;
 }
 
-#result {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 20px;
+/* Adjust grid columns dynamically */
+.emoji-grid.grid-1 {
+    grid-template-columns: repeat(1, 1fr);
 }
 
-#result.correct {
-    color: green;
+.emoji-grid.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
 }
 
-#result.incorrect {
-    color: red;
+.emoji-grid.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
 }
 
+/* Confetti Canvas */
 canvas {
     position: absolute;
     top: 0;
