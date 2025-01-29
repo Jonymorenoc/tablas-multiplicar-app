@@ -251,6 +251,7 @@ let userAnswers = [];           // se guardará si se respondió bien o mal
 // Elementos del DOM
 const quizContainer = document.getElementById("quiz-container");
 const startBtn = document.getElementById("start-btn");
+const progressBar = document.getElementById("progress-bar");
 
 // EVENTO: INICIAR QUIZ
 startBtn.addEventListener("click", startQuiz);
@@ -267,6 +268,7 @@ function startQuiz() {
   score = 0;
   userAnswers = [];
   
+  updateProgressBar();
   renderQuestion();
   startBtn.style.display = "none";
 }
@@ -284,10 +286,28 @@ function shuffleArray(arr) {
 }
 
 /**
+ * Actualiza la barra de progreso
+ */
+function updateProgressBar() {
+  const totalQuestions = shuffledQuestions.length;
+  const percentage = ((currentQuestionIndex) / totalQuestions) * 100;
+  progressBar.style.width = `${percentage}%`;
+}
+
+/**
  * Renderiza la pregunta actual en pantalla
  */
 function renderQuestion() {
-  quizContainer.innerHTML = "";
+  quizContainer.innerHTML = `
+    <div id="progress-container">
+      <div id="progress-bar"></div>
+    </div>
+    <div id="quiz-content">
+      <!-- Contenido dinámico generado por JavaScript -->
+    </div>
+  `;
+
+  updateProgressBar();
 
   // Verifica si ya se terminaron las preguntas
   if (currentQuestionIndex >= shuffledQuestions.length) {
@@ -296,6 +316,7 @@ function renderQuestion() {
   }
 
   const currentQ = shuffledQuestions[currentQuestionIndex];
+  const quizContent = document.getElementById("quiz-content");
 
   // Contenedor principal de la pregunta
   const questionEl = document.createElement("div");
@@ -310,6 +331,7 @@ function renderQuestion() {
   // Contenedor de retroalimentación
   const feedbackEl = document.createElement("div");
   feedbackEl.classList.add("feedback");
+  questionEl.appendChild(feedbackEl);
 
   // Opciones según el tipo
   if (currentQ.type === "mcq") {
@@ -324,7 +346,7 @@ function renderQuestion() {
       optionBtn.addEventListener("click", () => {
         // Verificar respuesta
         if (index === currentQ.correctAnswer) {
-          feedbackEl.textContent = currentQ.feedbackCorrect;
+          feedbackEl.innerHTML = `<p>${currentQ.feedbackCorrect}</p>`;
           feedbackEl.style.color = "green";
           score++;
           userAnswers.push({ 
@@ -333,7 +355,12 @@ function renderQuestion() {
             explanation: currentQ.explanation 
           });
         } else {
-          feedbackEl.textContent = currentQ.feedbackIncorrect;
+          feedbackEl.innerHTML = `
+            <p>${currentQ.feedbackIncorrect}</p>
+            <div class="error-section">
+              <p>💡 Explicación: ${currentQ.explanation}</p>
+            </div>
+          `;
           feedbackEl.style.color = "red";
           userAnswers.push({ 
             question: currentQ.question,
@@ -342,6 +369,7 @@ function renderQuestion() {
           });
         }
         disableOptions(optionsContainer);
+        showNextButton(quizContent);
       });
 
       optionsContainer.appendChild(optionBtn);
@@ -355,15 +383,16 @@ function renderQuestion() {
 
     const inputField = document.createElement("input");
     inputField.type = "text";
+    inputField.placeholder = "Tu respuesta aquí";
     inputContainer.appendChild(inputField);
 
     const checkBtn = document.createElement("button");
     checkBtn.classList.add("btn");
-    checkBtn.textContent = "Comprobar";
+    checkBtn.textContent = "Comprobar ✅";
 
     checkBtn.addEventListener("click", () => {
       if (inputField.value.trim() === currentQ.correctAnswer) {
-        feedbackEl.textContent = currentQ.feedbackCorrect;
+        feedbackEl.innerHTML = `<p>${currentQ.feedbackCorrect}</p>`;
         feedbackEl.style.color = "green";
         score++;
         userAnswers.push({ 
@@ -372,7 +401,12 @@ function renderQuestion() {
           explanation: currentQ.explanation 
         });
       } else {
-        feedbackEl.textContent = currentQ.feedbackIncorrect;
+        feedbackEl.innerHTML = `
+          <p>${currentQ.feedbackIncorrect}</p>
+          <div class="error-section">
+            <p>💡 Explicación: ${currentQ.explanation}</p>
+          </div>
+        `;
         feedbackEl.style.color = "red";
         userAnswers.push({ 
           question: currentQ.question,
@@ -382,30 +416,14 @@ function renderQuestion() {
       }
       checkBtn.disabled = true;
       inputField.disabled = true;
+      showNextButton(quizContent);
     });
 
     inputContainer.appendChild(checkBtn);
     questionEl.appendChild(inputContainer);
   }
 
-  questionEl.appendChild(feedbackEl);
-
-  // Botones de navegación (Siguiente)
-  const navButtons = document.createElement("div");
-  navButtons.classList.add("nav-buttons");
-
-  const nextBtn = document.createElement("button");
-  nextBtn.classList.add("btn");
-  nextBtn.textContent = "Siguiente ➡️";
-  nextBtn.addEventListener("click", () => {
-    currentQuestionIndex++;
-    renderQuestion();
-  });
-
-  navButtons.appendChild(nextBtn);
-  questionEl.appendChild(navButtons);
-
-  quizContainer.appendChild(questionEl);
+  quizContent.appendChild(questionEl);
 }
 
 /**
@@ -419,90 +437,98 @@ function disableOptions(container) {
 }
 
 /**
+ * Muestra el botón de "Siguiente" después de responder
+ */
+function showNextButton(container) {
+  const navButtons = document.createElement("div");
+  navButtons.classList.add("nav-buttons");
+
+  const nextBtn = document.createElement("button");
+  nextBtn.classList.add("btn");
+  nextBtn.textContent = "Siguiente ➡️";
+  nextBtn.addEventListener("click", () => {
+    currentQuestionIndex++;
+    updateProgressBar();
+    renderQuestion();
+  });
+
+  navButtons.appendChild(nextBtn);
+  container.appendChild(navButtons);
+}
+
+/**
  * Pantalla final cuando se terminan las preguntas
  */
 function showEndScreen() {
-  quizContainer.innerHTML = "";
+  quizContainer.innerHTML = `
+    <div id="result-container">
+      <h2>¡Examen finalizado! 🏆</h2>
+      <p>Tu calificación es: ${score}/${shuffledQuestions.length} (${Math.round((score / shuffledQuestions.length) * 100)}%)</p>
+      <p>${getFinalMessage()}</p>
+      ${score < shuffledQuestions.length ? '<button class="btn review-btn">Repasar Errores 👀</button>' : ''}
+      <button class="btn restart-btn">Reiniciar Examen 🔄</button>
+    </div>
+  `;
 
-  // Calcular puntaje final
-  const totalQuestions = shuffledQuestions.length;
-  const finalScore = score;
-  const percentage = Math.round((finalScore / totalQuestions) * 100);
-
-  // Crear elementos de resultado
-  const resultTitle = document.createElement("h2");
-  resultTitle.textContent = "¡Examen finalizado! 🏆";
-
-  const resultScore = document.createElement("p");
-  resultScore.textContent = `Tu calificación es: ${finalScore}/${totalQuestions} (${percentage}%)`;
-
-  const resultMsg = document.createElement("p");
-  if (percentage === 100) {
-    resultMsg.textContent = "¡Felicidades! Respondiste todo correctamente. 🌟";
-  } else if (percentage >= 70) {
-    resultMsg.textContent = "¡Buen trabajo! Puedes mejorar en algunas preguntas. 😊";
-  } else {
-    resultMsg.textContent = "Necesitas repasar un poco más. ¡Ánimo! 🤗";
-  }
-
-  quizContainer.appendChild(resultTitle);
-  quizContainer.appendChild(resultScore);
-  quizContainer.appendChild(resultMsg);
-
-  // Botón para repasar errores (solo si no está todo bien)
-  if (percentage < 100) {
-    const reviewBtn = document.createElement("button");
-    reviewBtn.classList.add("btn");
-    reviewBtn.textContent = "Repasar Errores 👀";
+  // Botón para repasar errores
+  if (score < shuffledQuestions.length) {
+    const reviewBtn = document.querySelector(".review-btn");
     reviewBtn.addEventListener("click", showReviewScreen);
-    quizContainer.appendChild(reviewBtn);
   }
 
   // Botón para reiniciar
-  const restartBtn = document.createElement("button");
-  restartBtn.classList.add("btn");
-  restartBtn.textContent = "Reiniciar";
+  const restartBtn = document.querySelector(".restart-btn");
   restartBtn.addEventListener("click", startQuiz);
+}
 
-  quizContainer.appendChild(restartBtn);
+/**
+ * Obtiene el mensaje final basado en el porcentaje
+ */
+function getFinalMessage() {
+  const percentage = Math.round((score / shuffledQuestions.length) * 100);
+  if (percentage === 100) {
+    return "¡Felicidades! Respondiste todo correctamente. 🌟";
+  } else if (percentage >= 70) {
+    return "¡Buen trabajo! Puedes mejorar en algunas preguntas. 😊";
+  } else {
+    return "Necesitas repasar un poco más. ¡Ánimo! 🤗";
+  }
 }
 
 /**
  * Muestra las preguntas que el usuario respondió mal, con su explicación.
  */
 function showReviewScreen() {
-  quizContainer.innerHTML = "<h2>Repaso de Errores 🤔</h2>";
-
-  // Filtrar las que están mal
-  const wrongAnswers = userAnswers.filter((ans) => ans.userCorrect === false);
-
-  if (wrongAnswers.length === 0) {
-    // Si no hay errores
-    const noErrors = document.createElement("p");
-    noErrors.textContent = "¡No tuviste errores! ¡Felicidades! 🥳";
-    quizContainer.appendChild(noErrors);
-  } else {
-    wrongAnswers.forEach((item, idx) => {
-      const wrongQContainer = document.createElement("div");
-      wrongQContainer.classList.add("question-container");
-
-      const questionText = document.createElement("p");
-      questionText.classList.add("question");
-      questionText.textContent = `❌ Pregunta: ${item.question}`;
-      wrongQContainer.appendChild(questionText);
-
-      const explainText = document.createElement("p");
-      explainText.textContent = `💡 Explicación: ${item.explanation}`;
-      wrongQContainer.appendChild(explainText);
-
-      quizContainer.appendChild(wrongQContainer);
-    });
-  }
+  quizContainer.innerHTML = `
+    <div id="review-container">
+      <h2>Repaso de Errores 🤔</h2>
+      ${generateErrorReview()}
+      <button class="btn restart-btn">Volver a iniciar 🔄</button>
+    </div>
+  `;
 
   // Botón para reiniciar
-  const restartBtn = document.createElement("button");
-  restartBtn.classList.add("btn");
-  restartBtn.textContent = "Volver a iniciar";
+  const restartBtn = document.querySelector(".restart-btn");
   restartBtn.addEventListener("click", startQuiz);
-  quizContainer.appendChild(restartBtn);
+}
+
+/**
+ * Genera el contenido de las preguntas mal respondidas
+ */
+function generateErrorReview() {
+  const wrongAnswers = userAnswers.filter((ans) => ans.userCorrect === false);
+  if (wrongAnswers.length === 0) {
+    return `<p>¡No tuviste errores! ¡Felicidades! 🥳</p>`;
+  }
+
+  let reviewHTML = "";
+  wrongAnswers.forEach((item, idx) => {
+    reviewHTML += `
+      <div class="question-container">
+        <p class="question">❌ Pregunta: ${item.question}</p>
+        <p>💡 Explicación: ${item.explanation}</p>
+      </div>
+    `;
+  });
+  return reviewHTML;
 }
