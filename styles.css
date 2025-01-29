@@ -8,7 +8,7 @@
 /* Fuente general */
 body {
   font-family: "Arial", sans-serif;
-  background: #fcfcfc;
+  background: #f0f8ff;
   color: #333;
   padding: 1rem;
   text-align: center;
@@ -20,12 +20,12 @@ header {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #673ab7;
 }
 
 .subtitle {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: #666;
 }
 
@@ -40,13 +40,33 @@ main {
 #quiz-container {
   background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   width: 90%;
-  max-width: 600px;
-  padding: 1.5rem;
+  max-width: 700px;
+  padding: 2rem;
   text-align: center;
+  position: relative;
 }
 
+/* Barra de Progreso */
+#progress-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 25px;
+  margin-bottom: 1.5rem;
+  height: 20px;
+  overflow: hidden;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #673ab7;
+  border-radius: 25px 0 0 25px;
+  transition: width 0.3s ease;
+}
+
+/* Botones */
 .btn {
   background: #673ab7;
   color: #fff;
@@ -67,16 +87,21 @@ main {
   margin-top: 2rem;
 }
 
+/* Contenedor de Preguntas */
 .question-container {
   margin: 1rem 0;
 }
 
+/* Texto de Pregunta */
 .question {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   margin-bottom: 1rem;
   padding: 0.5rem;
+  background: #f9f9f9;
+  border-radius: 8px;
 }
 
+/* Opciones */
 .options-container {
   display: flex;
   flex-direction: column;
@@ -89,45 +114,88 @@ main {
   background: #e8eaf6;
   color: #333;
   border: none;
-  border-radius: 6px;
-  padding: 0.75rem;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
   margin: 0.25rem 0;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   transition: background 0.3s;
-  width: 80%;
-  max-width: 300px;
+  width: 90%;
+  max-width: 400px;
+  font-size: 1.1rem;
 }
 
 .option-btn:hover {
   background: #dcdffb;
 }
 
+/* Feedback */
 .feedback {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   margin: 1rem 0;
   min-height: 1.5em;
+  padding: 0.5rem;
 }
 
+/* Botones de Navegación */
 .nav-buttons {
   display: flex;
   justify-content: center;
   gap: 1rem;
 }
 
+/* Input para respuestas libres */
 input[type="text"] {
   padding: 0.5rem;
   border: 2px solid #ddd;
-  border-radius: 6px;
+  border-radius: 12px;
   font-size: 1rem;
-  width: 80px;
+  width: 100px;
   text-align: center;
   margin-bottom: 0.5rem;
 }
 
+/* Footer */
 footer {
   margin-top: 2rem;
   font-size: 0.9rem;
   color: #999;
   text-align: center;
+}
+
+/* Sección de Errores */
+.error-section {
+  background: #ffe6e6;
+  border: 2px solid #ff4d4d;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.error-section p {
+  font-size: 1.1rem;
+  color: #cc0000;
+}
+
+/* Pantalla Final */
+#result-container {
+  text-align: center;
+}
+
+#result-container h2 {
+  font-size: 2rem;
+  color: #388e3c;
+}
+
+#result-container p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+#result-container .review-btn {
+  background: #ff9800;
+}
+
+#result-container .restart-btn {
+  background: #673ab7;
 }
