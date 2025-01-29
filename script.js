@@ -290,7 +290,8 @@ function shuffleArray(arr) {
  */
 function updateProgressBar() {
   const totalQuestions = shuffledQuestions.length;
-  const percentage = ((currentQuestionIndex) / totalQuestions) * 100;
+  const answeredQuestions = currentQuestionIndex;
+  const percentage = ((answeredQuestions) / totalQuestions) * 100;
   progressBar.style.width = `${percentage}%`;
 }
 
@@ -298,17 +299,9 @@ function updateProgressBar() {
  * Renderiza la pregunta actual en pantalla
  */
 function renderQuestion() {
-  quizContainer.innerHTML = `
-    <div id="progress-container">
-      <div id="progress-bar"></div>
-    </div>
-    <div id="quiz-content">
-      <!-- Contenido dinámico generado por JavaScript -->
-    </div>
-  `;
-
+  // Actualiza la barra de progreso
   updateProgressBar();
-
+  
   // Verifica si ya se terminaron las preguntas
   if (currentQuestionIndex >= shuffledQuestions.length) {
     showEndScreen();
@@ -316,7 +309,10 @@ function renderQuestion() {
   }
 
   const currentQ = shuffledQuestions[currentQuestionIndex];
+  
+  // Selecciona el contenedor de contenido del quiz
   const quizContent = document.getElementById("quiz-content");
+  quizContent.innerHTML = ""; // Limpia el contenido anterior
 
   // Contenedor principal de la pregunta
   const questionEl = document.createElement("div");
@@ -448,7 +444,6 @@ function showNextButton(container) {
   nextBtn.textContent = "Siguiente ➡️";
   nextBtn.addEventListener("click", () => {
     currentQuestionIndex++;
-    updateProgressBar();
     renderQuestion();
   });
 
@@ -460,7 +455,11 @@ function showNextButton(container) {
  * Pantalla final cuando se terminan las preguntas
  */
 function showEndScreen() {
-  quizContainer.innerHTML = `
+  // Actualiza la barra de progreso al 100%
+  progressBar.style.width = `100%`;
+
+  const quizContent = document.getElementById("quiz-content");
+  quizContent.innerHTML = `
     <div id="result-container">
       <h2>¡Examen finalizado! 🏆</h2>
       <p>Tu calificación es: ${score}/${shuffledQuestions.length} (${Math.round((score / shuffledQuestions.length) * 100)}%)</p>
@@ -499,7 +498,8 @@ function getFinalMessage() {
  * Muestra las preguntas que el usuario respondió mal, con su explicación.
  */
 function showReviewScreen() {
-  quizContainer.innerHTML = `
+  const quizContent = document.getElementById("quiz-content");
+  quizContent.innerHTML = `
     <div id="review-container">
       <h2>Repaso de Errores 🤔</h2>
       ${generateErrorReview()}
