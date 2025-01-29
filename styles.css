@@ -1,175 +1,133 @@
-/* 
-  A modern, clean UI:
-  - Subtle gradient background
-  - Rounded corners
-  - Subtle shadows 
-  - Light color palette
-*/
-
-html, body {
+/* Reset básico */
+* {
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
-  height: 100%;
+  box-sizing: border-box;
 }
 
+/* Fuente general */
 body {
-  /* Soft gradient background */
-  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  font-family: "Arial", sans-serif;
+  background: #fcfcfc;
+  color: #333;
+  padding: 1rem;
+  text-align: center;
+}
+
+/* Cabecera */
+header {
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #673ab7;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Contenedor principal */
+main {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #333;
+  min-height: 60vh;
 }
 
-.container {
-  width: 90%;
-  max-width: 480px;
-  padding: 20px;
-  background-color: #ffffff;
+#quiz-container {
+  background: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 600px;
+  padding: 1.5rem;
   text-align: center;
 }
 
-/* =============== Dropdown =============== */
-.dropdown {
-  position: relative;
-  margin-bottom: 16px;
-}
-
-.dropdown-btn {
-  background-color: #4a90e2; /* Modern, soft blue */
+.btn {
+  background: #673ab7;
   color: #fff;
   border: none;
-  padding: 12px;
-  font-size: 16px;
-  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 30px;
+  margin: 0.5rem;
   cursor: pointer;
-  width: 100%;
-  transition: background-color 0.2s ease;
-}
-.dropdown-btn:hover {
-  background-color: #417cb8;
+  transition: background 0.3s ease;
 }
 
-.dropdown-content {
-  position: absolute;
-  background-color: #fff;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  border-radius: 8px;
-  padding: 12px;
-  width: 100%;
-  z-index: 1;
-}
-.dropdown-content.hidden {
-  display: none;
-}
-.dropdown-content label {
-  display: block;
-  margin: 6px 0;
+.btn:hover {
+  background: #5e35b1;
 }
 
-/* =============== Buttons =============== */
-.action-btn {
-  background-color: #f5a623; /* Soft orange */
-  color: #fff;
-  border: none;
-  padding: 14px;
-  font-size: 18px;
-  border-radius: 8px;
-  cursor: pointer;
-  width: 100%;
-  margin-top: 10px;
-  transition: background-color 0.2s ease;
-}
-.action-btn:hover {
-  background-color: #d48b1d;
+.start-btn {
+  margin-top: 2rem;
 }
 
-.action-btn.blue {
-  background-color: #4a90e2;
-}
-.action-btn.blue:hover {
-  background-color: #417cb8;
+.question-container {
+  margin: 1rem 0;
 }
 
-/* =============== Emoji Box =============== */
-.emoji-box {
-  border: 2px solid #4a90e2;
-  background-color: rgba(74, 144, 226, 0.08);
-  padding: 12px;
-  border-radius: 12px;
-  margin: 20px 0;
-  display: flex;
-  justify-content: center;
+.question {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
 }
 
-.emoji-rows {
+.options-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  width: 100%;
+  margin-bottom: 1rem;
+  align-items: center;
 }
 
-.emoji-row {
+.option-btn {
+  background: #e8eaf6;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin: 0.25rem 0;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.3s;
+  width: 80%;
+  max-width: 300px;
+}
+
+.option-btn:hover {
+  background: #dcdffb;
+}
+
+.feedback {
+  font-size: 1.1rem;
+  margin: 1rem 0;
+  min-height: 1.5em;
+}
+
+.nav-buttons {
   display: flex;
-  gap: 5px;
   justify-content: center;
-  border: 1px solid #ddd;
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 8px;
+  gap: 1rem;
 }
 
-/* =============== Question =============== */
-.math-question {
-  font-size: 32px;
-  font-weight: 700;
-  margin: 20px 0 10px 0;
-}
-
-/* =============== Answer Input =============== */
-.answer-container input {
-  font-size: 20px;
-  padding: 10px;
-  width: 60%;
+input[type="text"] {
+  padding: 0.5rem;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 80px;
   text-align: center;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  margin-bottom: 16px;
-  outline: none;
-  transition: border-color 0.2s ease;
-}
-.answer-container input:focus {
-  border-color: #4a90e2;
+  margin-bottom: 0.5rem;
 }
 
-/* =============== Result Text =============== */
-#result {
-  margin-top: 16px;
-  font-size: 18px;
-}
-
-/* 
-  Red styling for incorrect answer:
-  We'll apply a class for the correct answer number 
-  when the user is incorrect 
-*/
-.incorrect-answer {
-  color: red;
-  font-weight: bold;
-  font-size: 1.2em;
-}
-
-/* =============== Misc =============== */
-.hidden {
-  display: none;
-}
-
-/* Confetti canvas must be on top but non-interactive */
-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  pointer-events: none;
+footer {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #999;
+  text-align: center;
 }
