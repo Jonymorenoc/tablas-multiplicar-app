@@ -2,76 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, maximum-scale=1.0, user-scalable=no"
-  />
-  <title>Tablas de Multiplicar</title>
-  <!-- Styles -->
+  <title>Examen de Matemáticas Interactivo</title>
   <link rel="stylesheet" href="styles.css" />
-  <!-- Confetti Script -->
-  <script
-    src="https://cdn.jsdelivr.net/npm/confetti-js/dist/index.min.js"
-    defer
-  ></script>
-  <!-- Main Script -->
-  <script src="script.js" defer></script>
 </head>
 <body>
-  <div class="container">
-    <!-- Dropdown -->
-    <div class="dropdown">
-      <button class="dropdown-btn full-width" id="dropdown-btn">
-        Seleccionar Tablas ⬇️
-      </button>
-      <div class="dropdown-content hidden" id="dropdown-content">
-        <label><input type="checkbox" class="table-select" value="1" /> Tabla del 1</label>
-        <label><input type="checkbox" class="table-select" value="2" checked /> Tabla del 2</label>
-        <label><input type="checkbox" class="table-select" value="3" checked /> Tabla del 3</label>
-        <label><input type="checkbox" class="table-select" value="4" checked /> Tabla del 4</label>
-        <label><input type="checkbox" class="table-select" value="5" checked /> Tabla del 5</label>
-        <label><input type="checkbox" class="table-select" value="6" /> Tabla del 6</label>
-        <label><input type="checkbox" class="table-select" value="7" /> Tabla del 7</label>
-        <label><input type="checkbox" class="table-select" value="8" /> Tabla del 8</label>
-        <label><input type="checkbox" class="table-select" value="9" /> Tabla del 9</label>
-        <label><input type="checkbox" class="table-select" value="10" /> Tabla del 10</label>
-      </div>
+  <header>
+    <h1>Examen Interactivo de Matemáticas 🦊✨</h1>
+    <p class="subtitle">¡Pon a prueba tus conocimientos!</p>
+  </header>
+
+  <main id="app">
+    <div id="quiz-container">
+      <button id="start-btn" class="btn start-btn">Iniciar Examen</button>
     </div>
+  </main>
 
-    <!-- Comenzar -->
-    <button id="start-btn" class="action-btn">Comenzar</button>
+  <footer>
+    <p>Examen basado en temas de Matemáticas (niños de 7 años)</p>
+  </footer>
 
-    <!-- Container for Questions and Answers -->
-    <div id="question-container" class="hidden">
-      <!-- Emoji Section -->
-      <div class="emoji-box">
-        <div id="emoji-rows" class="emoji-rows"></div>
-      </div>
-
-      <!-- Math Question -->
-      <p id="question" class="math-question"></p>
-
-      <!-- Answer input -->
-      <div class="answer-container">
-        <input
-          type="number"
-          id="answer"
-          inputmode="numeric"
-          pattern="[0-9]*"
-          placeholder="?"
-        />
-      </div>
-
-      <!-- Buttons -->
-      <button id="submit-btn" class="action-btn fill">Responder</button>
-      <button id="next-btn" class="action-btn blue hidden">Siguiente</button>
-
-      <!-- Result: Correct or Incorrect -->
-      <p id="result" class="hidden"></p>
-    </div>
-
-    <!-- Confetti canvas -->
-    <canvas id="confetti-canvas"></canvas>
-  </div>
+  <script src="script.js"></script>
 </body>
 </html>
